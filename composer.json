@@ -1,0 +1,18 @@
+{
+    "name" : "shelob9/jp-pre",
+    "description" : "WordPress customizer CSS color pre-processor.",
+    "keywords" : [  "wordpress"],
+    "license" : "GPL-2.0+",
+    "authors" : [
+        {
+            "name" : "Josh Pollock",
+            "email" : "josh@joshpress.net",
+            "homepage" : "http://JoshPress.net"
+        }
+    ],
+    "require" : {
+        "composer/installers" : "~1.0.0",
+        "php" : ">=5.2.4"
+    },
+    "homepage" : "https://github.com/Shelob9/jp-pre"
+}
