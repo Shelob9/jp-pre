@@ -152,7 +152,9 @@ class jp_pre_theme_customizer_output {
  *
  * @since 0.1.0
  */
-add_action( 'wp_head', 'jp_pre_theme_customizer_output'  );
+if ( JP_PRE_OUTPUT_IN_HEADER ) {
+	add_action( 'wp_head', 'jp_pre_theme_customizer_output' );
+}
 function jp_pre_theme_customizer_output() {
     //either set $css to the transient or rebuild.
     if ( false === ( $css = get_transient( JP_PRE_TRANSIENT_KEY ) ) ) {
