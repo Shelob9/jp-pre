@@ -25,12 +25,12 @@ You must follow these two easy steps:
 
 `wp_add_inline_style( 'handle-for-your-stylesheet', jp_pre_theme_customizer_output() );`
 
-#### How Can I Change The Name And/Or Location Of Customizer.css
+#### How Can I Change The Name And/Or Location Of Customizer.css?
 You can set the name by defining `JP_PRE_FILE_NAME` in wp-config.
 
 You can change the path its loaded from using the filter 'jp_pre_customizer_css_file_path'
 
-#### Can I Use This For Other Values Besides Color Values
+#### Can I Use This For Other Values Besides Color Values?
 Probably. But, at some point it's going to make more sense to use a full PHP implementation of SASS or LESS. At that point, you should be asking yourself important questions re: bloat, options overload and your inability to make design decisions.
 
 #### What If I'm Using Options Instead Of Theme Mods
