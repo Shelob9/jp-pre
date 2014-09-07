@@ -2,6 +2,8 @@ JP PRE
 ======
 A mini CSS preprocesser for easier output of color values set in the theme customizer. Based on [an article I wrote for Tuts+](http://code.tutsplus.com/tutorials/creating-a-mini-css-preprocesser-for-theme-color-options--cms-21551).
 
+<strong>This code is under development</strong> See discussion at [https://www.facebook.com/groups/advancedwp/806575116071371/](https://www.facebook.com/groups/advancedwp/806575116071371/) of current status. Right now a new way of outputting the data using wp_add_inline_style() is being tested in the [theme_support branch](https://github.com/Shelob9/jp-pre/tree/theme_support).
+
 ### Usage
 Add this file to your theme/ child theme and include it from functions.php preferably as a composer dependency or a Git submodule or if you must, copypasta.
 
