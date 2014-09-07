@@ -178,8 +178,8 @@ class jp_pre_theme_customizer_output {
 	 * @since 0.1.1
 	 */
 	function inline() {
-		if ( wp_script_is( $this->handle(), 'enqueued' ) && false !== $this->get_customizer_output() ) {
-			wp_add_inline_style( $this->handle(), $this->get_customizer_output() );
+		if ( wp_script_is( $this->get_handle(), 'enqueued' ) && false !== $this->get_customizer_output() ) {
+			wp_add_inline_style( $this->get_handle(), $this->get_customizer_output() );
 		}
 
 	}
