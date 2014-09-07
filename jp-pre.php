@@ -44,6 +44,13 @@ if ( ! defined( 'JP_PRE_OUTPUT_IN_HEADER') ) {
 class jp_pre_theme_customizer_output {
 
 
+	function __construct() {
+		if ( is_string( $this->get_handle() ) ) {
+			add_action( 'wp_enqueue_scripts', array( $this, 'inline' ), 99 );
+		}
+
+	}
+
     /**
      * An array of theme_mod names as key and default values to use if not set as value.
      *
@@ -143,49 +150,69 @@ class jp_pre_theme_customizer_output {
 
 	}
 
+	/**
+	 * Output processed CSS from the theme customizer
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string
+	 */
+	function get_customizer_output() {
+
+		$css = $this->process();
+
+		//to be safe make sure process() method didn't return false or anything other than a string
+		if ( $css && is_string( $css ) ) {
+
+			return $css;
+
+		}
+
+	}
+
+	/**
+	 * Adds the customizer output inline.
+	 *
+	 * If this does not work you set handle wrong. See readme
+	 *
+	 * @since 0.1.1
+	 */
+	function inline() {
+		if ( wp_script_is( $this->handle(), 'enqueued' ) && false !== $this->get_customizer_output() ) {
+			wp_add_inline_style( $this->handle(), $this->get_customizer_output() );
+		}
+
+	}
 
 
-}
+	/**
+	 * Get theme support declaration for jp-pre
+	 *
+	 * @return array
+	 *
+	 * @since 0.1.1
+	 */
+	private function get_theme_support() {
+		$theme_support = get_theme_support( 'jp-pre' );
 
-/**
- * Output processed CSS from the theme customizer
- *
- * @since 0.1.0
- */
-if ( JP_PRE_OUTPUT_IN_HEADER ) {
-	add_action( 'wp_head', 'jp_pre_theme_customizer_output' );
-}
-function jp_pre_theme_customizer_output() {
-    //either set $css to the transient or rebuild.
-    if ( false === ( $css = get_transient( JP_PRE_TRANSIENT_KEY ) ) ) {
-        //make sure class is reachable
-        if ( class_exists( 'jp_pre_theme_customizer' ) ) {
-            //initialize the class and get processed CSS
-            $class = new jp_pre_theme_customizer_output();
-            $css = $class->process();
+		return $theme_support;
 
-            //cache $css for next time.
-            set_transient( JP_PRE_TRANSIENT_KEY, $css );
-        }
-    }
+	}
 
-    //to be safe make sure process() method didn't return false or anything other than a string
-    if ( $css && is_string( $css ) ) {
-        echo $css;
+	/**
+	 * Should return the stylesheet handle registered in theme support as a string. If it does not setup is wrong and no output will result.
+	 *
+	 * @return string|null
+	 *
+	 * @since 0.1.1
+	 */
+	private function get_handle() {
+		$theme_support = $this->get_theme_support();
 
-    }
+		if ( isset( $theme_support[0]) && isset( $theme_support[0][ 'style-handle' ] ) ) {
+			return $theme_support[0][ 'style-handle' ];
+		}
 
-}
-
-/**
- * Clear the cache $css when the theme mods are updated.
- *
- * @since 0.1.0
- */
-$theme = get_stylesheet();
-add_action("update_option_theme_mods_{$theme}", array( $this, 'jp_pre_theme_customizer_css_transient' ) );
-function jp_pre_reset_theme_customizer_css_transient() {
-
-	delete_transient( JP_PRE_TRANSIENT_KEY );
+	}
 
 }
