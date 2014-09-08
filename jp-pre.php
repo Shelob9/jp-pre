@@ -9,6 +9,7 @@
  * @license   GPL-2.0+
  * @link
  * @copyright 2014 Josh Pollock
+ * @version	  0.1.3
  */
 
 /**
@@ -51,20 +52,6 @@ class jp_pre_theme_customizer_output {
 
 	}
 
-    /**
-     * An array of theme_mod names as key and default values to use if not set as value.
-     *
-     * @return array An array of theme_mod => default
-	 *
-	 * @since 0.1.0
-     */
-    function theme_mods() {
-        return array(
-            'site_title_color' => 'ff000',
-            'site_description_color'=> '000'
-        );
-
-    }
 
     /**
      * Prepare the colors getting values of theme_mods
@@ -76,8 +63,9 @@ class jp_pre_theme_customizer_output {
     function prepare_values() {
 		//start color false
 		$colors = false;
+
         //get our theme_mods and default values
-        $theme_mods = $this->theme_mods();
+        $theme_mods = $this->get_theme_mods();
 
         //for each theme_mod output the value of the theme_mod or the default
         foreach( $theme_mods as $theme_mod => $default ) {
@@ -180,6 +168,21 @@ class jp_pre_theme_customizer_output {
 	function inline() {
 		if ( wp_script_is( $this->get_handle(), 'enqueued' ) && false !== $this->get_customizer_output() ) {
 			wp_add_inline_style( $this->get_handle(), $this->get_customizer_output() );
+		}
+
+	}
+
+	/**
+	 * Get theme_mod names as key and default values to use if not set as value.
+	 *
+	 * @return array An array of theme_mod => default
+	 *
+	 * @since 0.1.3
+	 */
+	function get_theme_mods() {
+		$supports = $this->get_theme_support();
+		if ( isset( $supports[0][ 'colors' ] ) ) {
+			return $supports[0][ 'colors' ];
 		}
 
 	}
