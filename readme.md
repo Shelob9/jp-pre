@@ -15,19 +15,27 @@ function slug_jp_pre() {
 
 ```
 
-Add a theme support for jp-pre, with an argument for 'style-handle' equal to the handle you used to enqueue your main styleshseet. For example, in functions.php you could do:
+Add a theme support for jp-pre. In it you need  an argument for 'style-handle' equal to the handle you used to enqueue your main styleshseet. In addition you need an argument for 'colors' that has an array of each theme mod that represents color values and a default color. The default color is a hex value--without the #--to use if the theme mod is not set. For example, in functions.php you could do:
 
 ```php
 
 function slug_theme_setup() {
-	add_theme_support( 'jp-pre', array( 'style-handle' => 'slug-style' ) );
-	}
+	add_theme_support( 'jp-pre',
+	    array(
+    			'style-handle'  => '_s-style',
+    			'colors' 		=> array(
+    			    'post_title_color' => 'd3d3d3',
+    				'site_title_color' => 'ff000',
+    				'site_description_color'=> '000'
+    			),
+    		)
+    	);
 }
 add_action( 'after_setup_theme', 'slug_theme_setup' );
 
 ```
 
-Add a file to the root level of your theme/ child theme called customizer.css (or whatever you define in `JP_PRE_FILE_NAME`). In that file write CSS using the names of theme mods in brackets in place of the values. For example:
+Add a file to the root level of your theme/ child theme called customizer.css (or whatever you define in `JP_PRE_FILE_NAME`). In that file write CSS using the names of theme mods, declared in the add_theme_support, in brackets in place of the values. For example:
 ```css
 
 h1.post-title {
